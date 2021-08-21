@@ -36,7 +36,7 @@ def grid_create(gdf,lon_incre,lat_incre):
 
     grip_map = created_grid[created_grid.intersects(gdf.unary_union)]
     
-    return created_grid,grip_map
+    return created_grid,grip_map,gdf
 
 class TestGridCreate(unittest.TestCase):
     def test_grid_create(self):
@@ -60,8 +60,16 @@ class TestGridCreate(unittest.TestCase):
                     shapely.geometry.Polygon([(1,0),(2,0),(2,1),(1,1),(1,0)])]
                 })
         
+        test2 = gpd.GeoDataFrame({
+                'geometry': points.geometry,
+                'lon_id': [0,0,1],
+                'lat_id': [0,1,0]
+                })
+        
         pd.testing.assert_frame_equal(grid_create(points,1,1)[0].reset_index(drop=True), test0)
         pd.testing.assert_frame_equal(grid_create(points,1,1)[1].reset_index(drop=True), test1)
+        pd.testing.assert_frame_equal(grid_create(points,1,1)[2].reset_index(drop=True), test2)
+        
 
     
 unittest.main()
