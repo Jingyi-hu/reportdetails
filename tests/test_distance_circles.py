@@ -13,7 +13,7 @@ def distance_circles(gdf,x):
 
     distance_min = int(gdf['distance'].unique().min())
     distance_max = int(gdf['distance'].unique().max())
-    d = [0]*len(gdf.distance.unique())
+    d = [0]*len(gdf['distance'].unique())
     for i in range(distance_min,distance_max+1,x):
         d.append(i)
     
