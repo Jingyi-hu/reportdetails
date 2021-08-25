@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>GNSS data process &#8212; ACSE9-IRP 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gnss-data-process">
+<h1>GNSS data process<a class="headerlink" href="#gnss-data-process" title="Permalink to this headline">¶</a></h1>
+<section id="synopsis">
+<h2>Synopsis:<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p>The raw GNSS data collected by smartphones can not be used directly in this project. In addition to relying on the <a class="reference external" href="https://gnssmapper.readthedocs.io/en/latest/">gnssmapper</a> package developed by the team of Professor Ana from the University of Glasgow to process the data, we also need some other functions to process the data to complete the subsequent sampling work.</p>
+</section>
+<section id="functions">
+<h2>Functions:<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-gnss_process"></span><p>Module contains methods for process gnss data</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gnss_process.create_geodata">
+<span class="sig-prename descclassname"><span class="pre">gnss_process.</span></span><span class="sig-name descname"><span class="pre">create_geodata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnss_process.create_geodata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the GeoDataFrame for the input list where each element is the GeoDataFrame of GNSS receiver points.
+Here each element is the walking route during the data collecting process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>list</em>) – list of multiple GNSS GeoDataFrame information.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>combine all elements in the list of GNSS receiver points including:
+time, Cn0DbHz, svid (satellite information), receiver position (as point geometry)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gnss_process.data_format">
+<span class="sig-prename descclassname"><span class="pre">gnss_process.</span></span><span class="sig-name descname"><span class="pre">data_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnss_process.data_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust data format including time, svid and sea level of the building geometry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of GNSS data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of GNSS data with new format and sea level</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gnss_process.data_sort">
+<span class="sig-prename descclassname"><span class="pre">gnss_process.</span></span><span class="sig-name descname"><span class="pre">data_sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnss_process.data_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the GeoDataFrame by special string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of GNSS data</p></li>
+<li><p><strong>str</strong> (<em>sort based on this string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of GNSS data after sorting</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gnss_process.day_night">
+<span class="sig-prename descclassname"><span class="pre">gnss_process.</span></span><span class="sig-name descname"><span class="pre">day_night</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnss_process.day_night" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide the GeoDataFrame according to different dates (in this project by day and night ) because creating the observation rays between
+receiver points and satellites can only on one date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – geodataframe of gnss data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>two geodataframes of gnss data, one is
+data collected during data, another is
+during night</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>geodataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gnss_process.time_form">
+<span class="sig-prename descclassname"><span class="pre">gnss_process.</span></span><span class="sig-name descname"><span class="pre">time_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnss_process.time_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the time form in GeoDataFrame from microseconds to seconds to avoid the read error
+from underlying limitations in Fiona.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of GNSS data which has the column of time, and the time accuracy not to seconds</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new time form in Year-month-day-Hour-Minite-Second</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gnss_process.valid_svid">
+<span class="sig-prename descclassname"><span class="pre">gnss_process.</span></span><span class="sig-name descname"><span class="pre">valid_svid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnss_process.valid_svid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the invalid satellites from GeoDataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of GNSS data which has column of svid (satellite information)
+where [G,R,C,E] in the column refer to GPS, GLonasss, Beidou, and Galileo constellations.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of GNSS data and the satellites are GPS, GLonasss, Beidou, and Galileo.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ACSE9-IRP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Jingyi-Hu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/gnss_process.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

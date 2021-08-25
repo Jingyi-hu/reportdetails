@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>sampling strategies &#8212; ACSE9-IRP 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="sampling-strategies">
+<h1>sampling strategies<a class="headerlink" href="#sampling-strategies" title="Permalink to this headline">¶</a></h1>
+<section id="synopsis">
+<h2>Synopsis:<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p>Here are five sampling strategies to simulate the realistic scenarios:</p>
+<ul class="simple">
+<li><p>Random sampling</p>
+<ul>
+<li><p>random sampling with specific proportion</p></li>
+<li><p>random sampling with specific number</p></li>
+</ul>
+</li>
+<li><p>Sampling based on the relative position of the building and the collection point</p>
+<ul>
+<li><p>north direction</p></li>
+<li><p>south direction</p></li>
+<li><p>west direction</p></li>
+<li><p>east direction</p></li>
+</ul>
+</li>
+<li><p>Sampling by distance</p>
+<ul>
+<li><p>distance between collected point and centroid of building</p></li>
+<li><p>distance within specific buffer of building’s geometry</p></li>
+</ul>
+</li>
+<li><p>Sampling by time interval</p>
+<ul>
+<li><p>extract data at specific time intervals</p></li>
+</ul>
+</li>
+<li><p>Sampling by grids</p>
+<ul>
+<li><p>extract data within different boundaries heights</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="functions">
+<h2>Functions:<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-sampling"></span><p>Module contains methods for sampling the gnss data</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.buffer">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data through the distance buffer of the building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>building</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of building which contains the geometry of the building(2D)</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – distance buffer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of GNSS data after sampling by distance buffer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.combine_height">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">combine_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.combine_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine three types of heights (lower bound, mid point, upper bound) into one DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>listx</strong> (<em>list of heights</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>DataFrame which contains three estimated heights</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>lower bound, mid point and upper bound</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.direction_east">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">direction_east</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.direction_east" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by direction that data is in the east of the building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>building</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of building which contains the geometry of the building(2D)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of east GNSS data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.direction_north">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">direction_north</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.direction_north" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by direction that data is in the north of the building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>building</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of building which contains the geometry of the building(2D)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of north GNSS data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.direction_south">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">direction_south</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.direction_south" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by direction that data is in the south of the building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>building</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of building which contains the geometry of the building(2D)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of south GNSS data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.direction_west">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">direction_west</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.direction_west" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by direction that data is in the west of the building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>building</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of building which contains the geometry of the building(2D)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of west GNSS data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.distance">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">longitudeA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitudeA</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitudeB</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitudeB</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate distance in meters of point A and point B</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>longitudeA</strong> (<em>float</em>) – longitude of point A</p></li>
+<li><p><strong>latitudeA</strong> (<em>float</em>) – latitude of point A</p></li>
+<li><p><strong>longitudeB</strong> (<em>float</em>) – longitude of point B</p></li>
+<li><p><strong>latitudeB</strong> (<em>float</em>) – latitude of point B</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Straight line distance in meters between point A and point B</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.distance_circles">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">distance_circles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.distance_circles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by different distances between GNSS receiver points and centroid of building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – distance interval</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of GNSS data after sampling by distance interval</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.distance_list">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">distance_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.distance_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate distances between all GNSS received points and centroid of building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>building</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of building which contains the geometry of the building(2D)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame contains all distances</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.grid">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by grids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of each grid which contains all related GNSS data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.grid_create">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">grid_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon_incre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_incre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.grid_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create grid based on GNSS data’s geometry and increment of longitude and latitude</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>lon_num</strong> (<em>int</em>) – number of grid in longitude</p></li>
+<li><p><strong>lat_num</strong> (<em>int</em>) – number of grid in latitude</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Two returns: the first one is the GeoDataFrame of whole grids,
+another is the GeoDataFrame of the intersected grids</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.grid_increment">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">grid_increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.grid_increment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtaining the increment of grid in both longitude and latitude based on the GNSS data’s geometry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – grid side length in meters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>increment of grid in longitude and latitude</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.random_frac">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">random_frac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.random_frac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data randomly by fraction(from 10% to 100% in increments of 10%) of the population</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – (x+1)/10 is the sampling fraction</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame after sampling and the length of the new GeoDataFrame is [(x+1)/10]% of population</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.random_row">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">random_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.random_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data randomly by entering the specific number of samples</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – x is the interger number of samples</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – y is the random seed, different random seeds have the same sample size after random sampling, but the results are different</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame after sampling and the length of the new GeoDataFrame is the input x</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.rmse">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">rmse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.rmse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the Root Mean Squared Error</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>DataFrame</em>) – </p></li>
+<li><p><strong>i</strong> (<em>int</em>) – number of samples</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>rmse</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.sample_size">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">sample_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.sample_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Random sampling of a certain size of the population multiple times</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – </p></li>
+<li><p><strong>x</strong> (<em>int</em>) – size of sample</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – number of samples</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of samples with input size</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sampling.time_interval">
+<span class="sig-prename descclassname"><span class="pre">sampling.</span></span><span class="sig-name descname"><span class="pre">time_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sampling.time_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling the GNSS data by different time intervals</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gdf</strong> (<em>GeoDataFrame</em>) – GeoDataFrame of all GNSS data(population)</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – time interval</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GeoDataFrame of GNSS data after sampling by time interval</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ACSE9-IRP</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Jingyi-Hu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/sampling.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
